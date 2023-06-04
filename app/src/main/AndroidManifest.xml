@@ -19,7 +19,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".IntroActivity"
             android:exported="true"
             android:theme="@style/Theme.Companion">
             <intent-filter>
@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IntroActivity"/>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>
