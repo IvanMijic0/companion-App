@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Companion</string>
+    <string name="hide_password">Hide password\n</string>
+    <string name="search">Searching</string>
+    <string name="close">closing\n</string>
+    <string name="history">history icon\n</string>
+    <string name="profile">Profile icon\n</string>
+    <string name="google_maps_key" translatable="false">AIzaSyA7CUjuqZfXXRLTkoJ93SYKbWjlqwauV10</string>
+</resources>
