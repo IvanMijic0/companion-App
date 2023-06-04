@@ -1,4 +1,4 @@
-package com.example.companion.ui.theme
+package com.example.companion
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,9 +21,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.companion.Destination
-import com.example.companion.HomePageScreen
-import com.example.companion.R
 
 @Composable
 fun IntroScreen(navController: NavController) {

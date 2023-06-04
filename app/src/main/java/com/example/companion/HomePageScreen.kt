@@ -104,15 +104,23 @@ fun HomePageScreen(navController: NavController) {
         val cities = remember { mutableStateOf(Cities.getAllCities()) }
         val pageSize = 5
         var currentPage = 0
-        LazyColumn(modifier = Modifier.background(Color(0x5EC5FAE3)).fillMaxHeight(0.87f)) {
-           // for list of cities in lazy row
+        LazyColumn(modifier = Modifier
+            .background(Color(0x37FFA099))
+            .fillMaxHeight(0.87f)) {
+            // for list of cities in lazy row
             val citiesFrom = currentPage * pageSize
             var citiesTo = (currentPage + 1 * pageSize)
             if (cities.value.size < citiesTo)
                 citiesTo = cities.value.size
             val nextCity = cities.value.subList(citiesFrom, citiesTo)
 
-            item{ Text(text="Cities to visit: ", textAlign = TextAlign.Left,fontWeight = FontWeight.Bold)}
+            item {
+                Text(
+                    text = "Cities to visit: ",
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
             item {
                 LazyRow(
@@ -137,10 +145,12 @@ fun HomePageScreen(navController: NavController) {
                                         )
                                     )
                                 }
-                        ){
-                            Image(painter = painterResource(id = it.resId), contentDescription =null ,
+                        ) {
+                            Image(
+                                painter = painterResource(id = it.resId), contentDescription = null,
                                 modifier = Modifier.fillMaxHeight(0.90f),
-                                contentScale= ContentScale.Crop)
+                                contentScale = ContentScale.Crop
+                            )
 
                         }
 
@@ -150,44 +160,72 @@ fun HomePageScreen(navController: NavController) {
             }
             currentPage++
 
-            item{
+            item {
 
-                Text(text="Best places to visit right now!",fontWeight = FontWeight.Bold)
-                Row(modifier =Modifier.background(Color.Transparent).padding(10.dp)){
+                Text(text = "Best places to visit right now!", fontWeight = FontWeight.Bold)
+                Row(modifier = Modifier
+                    .background(Color.Transparent)
+                    .padding(10.dp)) {
 
-                    Image(painter = painterResource(id = R.drawable.svica) , contentDescription =null ,
-                        contentScale= ContentScale.Crop, modifier = Modifier.clip(RoundedCornerShape(30.dp))
-                        )
-
-                    Text(text="Discover the joy of skiing in Switzerland's stunning alpine wonderland. Join us on the slopes for an unforgettable winter adventure!",
-                        textAlign = TextAlign.Center, fontSize = 20.sp,color= Color.Gray)
-                }
-                Row(modifier =Modifier.background(Color.Transparent).padding(10.dp)){
-
-                    Image(painter = painterResource(id = R.drawable.capajevo) , contentDescription =null ,
-                        contentScale= ContentScale.Crop, modifier = Modifier.clip(RoundedCornerShape(20.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.svica),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.clip(RoundedCornerShape(30.dp))
                     )
 
-                    Text(text="Welcome to Sarajevo! \n"+ "Place where the spirit of Ramadan fills the air, and the city comes alive with vibrant traditions and warm hospitality.",
-                        textAlign = TextAlign.Center, fontSize = 20.sp,color= Color.Gray)
+                    Text(
+                        text = "Discover the joy of skiing in Switzerland's stunning alpine wonderland. Join us on the slopes for an unforgettable winter adventure!",
+                        textAlign = TextAlign.Center, fontSize = 20.sp, color = Color.Gray
+                    )
                 }
-                Row(modifier =Modifier.background(Color.Transparent).padding(10.dp)){
+                Row(modifier = Modifier
+                    .background(Color.Transparent)
+                    .padding(10.dp)) {
 
-                    Image(painter = painterResource(id = R.drawable.florence) , contentDescription =null ,
-                        contentScale= ContentScale.Crop, modifier = Modifier.clip(RoundedCornerShape(20.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.capajevo),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.clip(RoundedCornerShape(20.dp))
                     )
 
-                    Text(text="Welcome to Florence, a city of artistic wonders and captivating beauty. Discover the essence of the Renaissance as you explore its enchanting streets and immerse yourself in its rich cultural heritage.",
-                        textAlign = TextAlign.Center, fontSize = 18.sp,color= Color.Gray)
+                    Text(
+                        text = "Welcome to Sarajevo! \n" + "Place where the spirit of Ramadan fills the air, and the city comes alive with vibrant traditions and warm hospitality.",
+                        textAlign = TextAlign.Center, fontSize = 20.sp, color = Color.Gray
+                    )
                 }
-                Row(modifier =Modifier.background(Color.Transparent).padding(10.dp)){
+                Row(modifier = Modifier
+                    .background(Color.Transparent)
+                    .padding(10.dp)) {
 
-                    Image(painter = painterResource(id = R.drawable.amsterdam) , contentDescription =null ,
-                        contentScale= ContentScale.Crop, modifier = Modifier.clip(RoundedCornerShape(20.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.florence),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.clip(RoundedCornerShape(20.dp))
                     )
 
-                    Text(text="Let's create lifelong memories together in the captivating streets of Amsterdam.Involve yourself in the enchanting canals, vibrant culture, and rich history that this beautiful city has to offer. ",
-                        textAlign = TextAlign.Center, fontSize = 18.sp,color= Color.Gray)
+                    Text(
+                        text = "Welcome to Florence, a city of artistic wonders and captivating beauty. Discover the essence of the Renaissance as you explore its enchanting streets and immerse yourself in its rich cultural heritage.",
+                        textAlign = TextAlign.Center, fontSize = 18.sp, color = Color.Gray
+                    )
+                }
+                Row(modifier = Modifier
+                    .background(Color.Transparent)
+                    .padding(10.dp)) {
+
+                    Image(
+                        painter = painterResource(id = R.drawable.amsterdam),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.clip(RoundedCornerShape(20.dp))
+                    )
+
+                    Text(
+                        text = "Let's create lifelong memories together in the captivating streets of Amsterdam.Involve yourself in the enchanting canals, vibrant culture, and rich history that this beautiful city has to offer. ",
+                        textAlign = TextAlign.Center, fontSize = 18.sp, color = Color.Gray
+                    )
                 }
 
             }

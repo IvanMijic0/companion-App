@@ -3,7 +3,6 @@ package com.example.companion
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -14,7 +13,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 
 @Composable
-fun MapScreen(navController: NavController) {
+fun MapScreen() {
     val hadzici = LatLng(43.82222,   18.20667)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(hadzici, 10f)

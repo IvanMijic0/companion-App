@@ -127,7 +127,7 @@ fun CompanionScaffold(
                 HomePageScreen(navController = navController)
             }
             composable(Destinations.Map.route) {
-                MapScreen(navController)
+                MapScreen()
             }
             composable(Destinations.Detail.route) {
                 val itemId=it.arguments?.getString("itemId")
@@ -137,13 +137,13 @@ fun CompanionScaffold(
                     DetailsScreen(itemId.toInt(),modifier = Modifier)
             }
             composable(Destinations.Flights.route) {
-                FlightsScreen(navController = navController)
+                FlightsScreen()
             }
             composable(Destinations.Hotels.route) {
-                HotelScreen(navController = navController)
+                HotelScreen()
             }
             composable(Destinations.Guides.route) {
-                GuideScreen(navController = navController)
+                GuideScreen()
             }
         }
     }

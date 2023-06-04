@@ -17,9 +17,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.example.companion.data.UserDB
-import com.example.companion.ui.theme.IntroScreen
-import com.example.companion.ui.theme.LoginScreen
-import com.example.companion.ui.theme.SignUpScreen
 import com.example.companion.ui.theme.theme.CompanionTheme
 
 sealed class Destination(val route: String) {

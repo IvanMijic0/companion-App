@@ -1,10 +1,11 @@
-package com.example.companion.ui.theme
+package com.example.companion
 
+import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,10 +13,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialogDefaults.containerColor
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -25,11 +29,9 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +43,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -48,113 +51,121 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.companion.Destination
-import com.example.companion.R
 import com.example.companion.data.User
 import com.example.companion.data.UserDB
 import com.example.companion.ui.theme.states.EmailState
 import com.example.companion.ui.theme.states.PasswordState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 
 @Composable
-fun SignUpScreen(
+fun LoginScreen(
     navController: NavController,
     database: UserDB,
     showToast: MutableState<Boolean>,
-    showSuccess: MutableState<Boolean>
 ) {
-
-    SignupBackgroundImage()
-    SignupContent(
-        navController = navController,
-        database = database,
-        showToast = showToast,
-        showSuccess = showSuccess
-    )
+    LoginContent(navController = navController, database = database, showToast = showToast)
 }
 
 @Composable
-fun SignupBackgroundImage() {
+fun LoginBackgroundImage() {
     Image(
-        painter = painterResource(R.drawable.signup_background),
+        painter = painterResource(R.drawable.login_background),
         contentDescription = null,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop,
+        modifier = Modifier.fillMaxWidth(1f),
+        contentScale = ContentScale.FillWidth,
     )
 }
 
 @Composable
-fun SignupContent(
-    navController: NavController,
-    database: UserDB,
-    showToast: MutableState<Boolean>,
-    showSuccess: MutableState<Boolean>
-) {
+fun LoginContent(navController: NavController, database: UserDB, showToast: MutableState<Boolean>) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
-        SignupTopBar()
-        Spacer(modifier = Modifier.padding(top = 80.dp))
-        SignupText()
-        Spacer(modifier = Modifier.weight(1f))
-        val localFocusManager = LocalFocusManager.current
-        val emailState = remember { EmailState() }
-        Email(
-            emailState.text,
-            emailState.error,
-            onEmailChanged = {
-                emailState.text = it
-                emailState.validate()
-            },
-            onImeAction = {
-                localFocusManager.moveFocus(FocusDirection.Down)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(1f)
+
+        ) {
+            LoginBackgroundImage()
+            Column(
+                verticalArrangement = Arrangement.spacedBy(70.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+
+            ) {
+                LoginTopBar()
+                LoginText()
             }
-        )
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        val passwordState = remember { PasswordState() }
-        Password(
-            passwordState.text,
-            passwordState.error,
-            onPasswordChanged = {
-                passwordState.text = it
-                passwordState.validate()
-            },
-            onImeAction = {
-                localFocusManager.clearFocus()
-                if (emailState.isValid() && passwordState.isValid()) {
-                    signUp(emailState.text, passwordState.text)
+        }
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .background(Color(0xFFFFEBEB))
+                .fillMaxSize()
+        ) {
+
+            val localFocusManager = LocalFocusManager.current
+            val emailState = remember { EmailState() }
+
+            Spacer(modifier = Modifier.padding(top = 40.dp))
+            LoginEmail(
+                emailState.text,
+                emailState.error,
+                onEmailChanged = {
+                    emailState.text = it
+                    emailState.validate()
+                },
+                onImeAction = {
+                    localFocusManager.moveFocus(FocusDirection.Down)
                 }
-            }
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        SignupButton(
-            enabled = emailState.isValid() && passwordState.isValid(),
-            email = emailState.text,
-            password = passwordState.text,
-            database = database,
-            navController = navController,
-            showToast = showToast,
-            showSuccess = showSuccess
-        )
+            )
+            Spacer(modifier = Modifier.padding(vertical = 4.dp))
+            val passwordState = remember { PasswordState() }
+            LoginPassword(
+                passwordState.text,
+                passwordState.error,
+                onPasswordChanged = {
+                    passwordState.text = it
+                    passwordState.validate()
+                },
+                onImeAction = {
+                    localFocusManager.clearFocus()
+                    if (emailState.isValid() && passwordState.isValid()) {
+                        login(emailState.text, passwordState.text)
+                    }
+                }
+            )
+            Spacer(modifier = Modifier.padding(horizontal = 50.dp))
+
+            LoginButton(
+                enabled = emailState.isValid() && passwordState.isValid(),
+                email = emailState.text,
+                password = passwordState.text,
+                database = database,
+                navController = navController,
+                showToast = showToast
+            )
+
+        }
     }
+
 }
 
-fun signUp(email: String, password: String) {
+fun login(email: String, password: String) {
     Log.d("TEST", "email $email, password $password")
 }
 
 @Composable
-fun SignupTopBar() {
+fun LoginTopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -188,7 +199,7 @@ fun SignupTopBar() {
 }
 
 @Composable
-fun SignupText() {
+fun LoginText() {
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
@@ -223,7 +234,7 @@ fun SignupText() {
 }
 
 @Composable
-fun Email(
+fun LoginEmail(
     email: String,
     error: String?,
     onEmailChanged: (String) -> Unit,
@@ -250,9 +261,9 @@ fun Email(
             focusedTextColor = Color(0xFF3C0101),
             unfocusedTextColor = Color(0xFF3C0101),
             errorTextColor = Color(0xFF5E0000),
-            focusedContainerColor = Color(0xFFFFB1B1),
-            unfocusedContainerColor = Color(0xFFFFB1B1),
-            disabledContainerColor = containerColor,
+            focusedContainerColor =  Color(0xFFFFB1B1),
+            unfocusedContainerColor =  Color(0xFFFFB1B1),
+            disabledContainerColor = AlertDialogDefaults.containerColor,
             errorContainerColor = Color(0xFFFF9595),
             cursorColor = Color(0xFF3C0101),
             errorCursorColor = Color(0xFFD60000),
@@ -273,11 +284,11 @@ fun Email(
         modifier = Modifier.fillMaxWidth(.9f)
     )
 
-    error?.let { ErrorField(it) }
+    error?.let { LoginErrorField(it) }
 }
 
 @Composable
-fun ErrorField(error: String) {
+fun LoginErrorField(error: String) {
     Text(
         text = error,
         color = Color(0xFFD60000),
@@ -290,7 +301,7 @@ fun ErrorField(error: String) {
 }
 
 @Composable
-fun Password(
+fun LoginPassword(
     password: String,
     error: String?,
     onPasswordChanged: (String) -> Unit,
@@ -319,9 +330,9 @@ fun Password(
             focusedTextColor = Color(0xFF3C0101),
             unfocusedTextColor = Color(0xFF3C0101),
             errorTextColor = Color(0xFF5E0000),
-            focusedContainerColor = Color(0xFFFFB1B1),
-            unfocusedContainerColor = Color(0xFFFFB1B1),
-            disabledContainerColor = containerColor,
+            focusedContainerColor =  Color(0xFFFFB1B1),
+            unfocusedContainerColor =  Color(0xFFFFB1B1),
+            disabledContainerColor = AlertDialogDefaults.containerColor,
             errorContainerColor = Color(0xFFFF9595),
             cursorColor = Color(0xFF3C0101),
             errorCursorColor = Color(0xFFD60000),
@@ -369,124 +380,116 @@ fun Password(
 }
 
 @Composable
-fun SignupButton(
+fun LoginButton(
     enabled: Boolean,
     email: String,
     password: String,
     database: UserDB,
     navController: NavController,
-    showToast: MutableState<Boolean>,
-    showSuccess: MutableState<Boolean>
+    showToast: MutableState<Boolean>
 ) {
-    val coroutineScope = rememberCoroutineScope()
 
-    Button(
-        onClick = {
-            coroutineScope.launch {
-                try {
-                    val user = User(email = email, password = password)
-                    withContext(Dispatchers.IO) {
-                        if (database.userDao().getUserByEmail(email) == email &&
-                            database.userDao().getUserByPassword(password) == password
-                        ) {
-                            showToast.value = true
-                        } else {
-                            database.userDao().updateUser(user)
-                            showSuccess.value = true
-                        }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        },
-        modifier = Modifier.fillMaxWidth(.6f),
-        colors = ButtonDefaults.buttonColors(Color(0xFFFFB1B1)),
-        enabled = enabled
+    val ctx = LocalContext.current
+
+    TextButton(onClick = { /*TODO*/ }) {
+        Text(text = "Forgot Password?", color = Color(0xFF3C0101), fontWeight = FontWeight.Bold)
+    }
+    Spacer(modifier = Modifier.padding(vertical = 10.dp))
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        Text(
-            text = "Sign Up",
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF3C0101)
-        )
-    }
-    Text(text = "or", color = Color(0xFFFFB1B1))
-    Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-        IconButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color(0xFF682B2B))
+        Text(text = "or", color = Color(0xFF3C0101))
+        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+            IconButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xFF682B2B))
+                    .width(40.dp)
+                    .height(40.dp)
 
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_google),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier
+                        .width(30.dp)
+                        .height(30.dp)
+                )
+            }
+            Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+            IconButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xFF682B2B))
+                    .width(40.dp)
+                    .height(40.dp)
+
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_meta),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier
+                        .width(30.dp)
+                        .height(30.dp)
+                )
+            }
+        }
+        Button(
+            onClick = {
+                val user = User(email = email, password = password)
+                CoroutineScope(Dispatchers.IO).launch {
+                    if (database.userDao().getUserByEmail(email) == user.email && database.userDao()
+                            .getUserByPassword(password) == user.password
+                    ) {
+                        val mainActivityIntent = Intent(ctx, MainActivity::class.java)
+                        ctx.startActivity(mainActivityIntent)
+                    } else {
+                        showToast.value = true
+                    }
+
+//                val user = database.userDao().getUser(4).firstOrNull()
+//                user?.let {
+//                    database.userDao().deleteUser(user)
+//                }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(.6f),
+            colors = ButtonDefaults.buttonColors(Color(0xFFFFB1B1)),
+            enabled = enabled
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_google),
-                contentDescription = null,
-                tint = Color.White
+            Text(
+                text = "Login",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF3C0101)
             )
         }
-        Spacer(modifier = Modifier.padding(horizontal = 8.dp))
-        IconButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color(0xFF682B2B))
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "Don't have an account?",
+                color = Color(0xFF3C0101),
+                fontSize = 12.sp,
 
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_meta),
-                contentDescription = null,
-                tint = Color.White
-            )
+                )
+            TextButton(
+                onClick = { navController.navigate(Destination.Signup.route) },
+                modifier = Modifier
+            ) {
+                Text(
+                    text = "Sign Up",
+                    fontWeight = FontWeight.Bold,
+                    style = TextStyle(textDecoration = TextDecoration.Underline),
+                    color = Color(0xFF3C0101),
+                    fontSize = 15.sp
+                )
+            }
         }
-    }
-    Text(
-        text = "Already have an account?",
-        color = Color(0xFFFFB1B1),
-        modifier = Modifier.padding(top = 16.dp)
-    )
-    TextButton(onClick = { navController.navigate(Destination.Login.route) }, modifier = Modifier) {
-        Text(
-            text = "Login",
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFFFFB1B1),
-            fontSize = 20.sp
-        )
-    }
 
-    ShowToast(
-        message = "User already exists, please log in",
-        showToast = showToast,
-    )
-
-    ShowSuccessToast(message = "Successful signup, proceed to login", showSuccess = showSuccess)
-}
-
-@Composable
-fun ShowToast(
-    message: String,
-    showToast: MutableState<Boolean>,
-) {
-    if (showToast.value) {
-        val ctx = LocalContext.current
-        LaunchedEffect(Unit) {
-            Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
-        }
-        showToast.value = !showToast.value
     }
-}
-
-@Composable
-fun ShowSuccessToast(
-    message: String,
-    showSuccess: MutableState<Boolean>
-) {
-    if (showSuccess.value) {
-        val ctx = LocalContext.current
-        LaunchedEffect(Unit) {
-            Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
-        }
-        showSuccess.value = !showSuccess.value
-    }
+    ShowToast(message = "User does not exist, please sign up", showToast = showToast)
 }

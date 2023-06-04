@@ -16,82 +16,108 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 
 @Composable
-fun FlightsScreen(navController: NavController) {
+fun FlightsScreen() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .fillMaxHeight(.85f)
+            .fillMaxHeight(.89f)
             .verticalScroll(rememberScrollState())
     ) {
 
-            Text(text = "Available flights today", fontSize = 20.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+        Text(
+            text = "Available flights today",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+        )
 
-
-
-
-        Spacer(modifier=Modifier.height(20.dp))
-        Row(modifier=Modifier.fillMaxWidth(1f)){
-            Box(modifier=Modifier.fillMaxWidth()){
-                Image(painter = painterResource(id = R.drawable.berlinlet), contentDescription =null ,
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(modifier = Modifier.fillMaxWidth(1f)) {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Image(
+                    painter = painterResource(id = R.drawable.berlinlet), contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale= ContentScale.FillWidth)
-                Text("From: Sarajevo\nTo: Berlin ",fontSize = 17.sp, fontWeight = FontWeight.Bold, modifier=Modifier.background(Color(
-                    0x97FFFFFF
+                    contentScale = ContentScale.FillWidth
                 )
-                ))
+                Text(
+                    "From: Sarajevo\nTo: Berlin ",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.background(
+                        Color(
+                            0x97FFFFFF
+                        )
+                    )
+                )
+            }
+        }
 
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(modifier = Modifier.fillMaxWidth(1f)) {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Image(
+                    painter = painterResource(id = R.drawable.rimlet), contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.FillWidth
+                )
+                Text(
+                    "From: Tuzla\nTo: Rome ",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.background(
+                        Color(
+                            0x97FFFFFF
+                        )
+                    )
+                )
+            }
+
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(modifier = Modifier.fillMaxWidth(1f)) {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Image(
+                    painter = painterResource(id = R.drawable.istanbullet),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.FillWidth
+                )
+                Text(
+                    "From: Sarajevo\nTo: Istanbul ",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.background(
+                        Color(
+                            0x97FFFFFF
+                        )
+                    )
+                )
 
 
             }
 
         }
-
-        Spacer(modifier=Modifier.height(20.dp))
-        Row(modifier=Modifier.fillMaxWidth(1f)){
-            Box(modifier=Modifier.fillMaxWidth()){
-                Image(painter = painterResource(id = R.drawable.rimlet), contentDescription =null ,
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(modifier = Modifier.fillMaxWidth(1f)) {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Image(
+                    painter = painterResource(id = R.drawable.zurichlet), contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale= ContentScale.FillWidth)
-                Text("From: Tuzla\nTo: Rome ",fontSize = 17.sp, fontWeight = FontWeight.Bold, modifier=Modifier.background(Color(
-                    0x97FFFFFF
+                    contentScale = ContentScale.FillWidth
                 )
-                ))
-
-
-
-            }
-
-        }
-        Spacer(modifier=Modifier.height(20.dp))
-        Row(modifier=Modifier.fillMaxWidth(1f)){
-            Box(modifier=Modifier.fillMaxWidth()){
-                Image(painter = painterResource(id = R.drawable.istanbullet), contentDescription =null ,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale= ContentScale.FillWidth)
-                Text("From: Sarajevo\nTo: Istanbul ",fontSize = 17.sp, fontWeight = FontWeight.Bold, modifier=Modifier.background(Color(
-                    0x97FFFFFF
+                Text(
+                    "From: Sarajevo\nTo: Zurich ",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.background(
+                        Color(
+                            0x97FFFFFF
+                        )
+                    )
                 )
-                ))
-
-
-
-            }
-
-        }
-        Spacer(modifier=Modifier.height(20.dp))
-        Row(modifier=Modifier.fillMaxWidth(1f)){
-            Box(modifier=Modifier.fillMaxWidth()){
-                Image(painter = painterResource(id = R.drawable.zurichlet), contentDescription =null ,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale= ContentScale.FillWidth)
-                Text("From: Sarajevo\nTo: Istanbul ",fontSize = 17.sp, fontWeight = FontWeight.Bold, modifier=Modifier.background(Color(
-                    0x97FFFFFF
-                )
-                ))
 
 
             }
