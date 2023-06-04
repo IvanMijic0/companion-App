@@ -45,15 +45,14 @@ fun HomePageScreen(navController: NavController) {
         )
     }
 
-
-    Column() {
+    Column(modifier = Modifier.background(Color(0x37FFA099))) {
         SearchBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
                 .padding(top = 5.dp),
             colors = SearchBarDefaults.colors(
-                containerColor = Color(0xFFEEEEEE)
+                containerColor = Color(0xFFFFFFFF)
             ),
             query = text.value,
             onQueryChange = { text.value = it },
