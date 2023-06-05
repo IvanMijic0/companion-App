@@ -23,7 +23,7 @@ fun GuideScreen() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxHeight(.89f)
-            .verticalScroll(rememberScrollState()).background(Color(0x37FFA099))
+            .verticalScroll(rememberScrollState()).background(Color(0xD0FFF2E0))
     ) {
         Text(text = "Crucial Travel Advices", fontSize = 27.sp, fontWeight = FontWeight.Bold)
         

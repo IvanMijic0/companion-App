@@ -45,7 +45,7 @@ fun HomePageScreen(navController: NavController) {
         )
     }
 
-    Column(modifier = Modifier.background(Color(0x37FFA099))) {
+    Column(modifier = Modifier.background(Color(0xD0FFF2E0))) {
         SearchBar(
             modifier = Modifier
                 .fillMaxWidth()
@@ -104,7 +104,7 @@ fun HomePageScreen(navController: NavController) {
         val pageSize = 5
         var currentPage = 0
         LazyColumn(modifier = Modifier
-            .background(Color(0x37FFA099))
+            .background(Color(0xD0FFF2E0))
             .fillMaxHeight(0.87f)) {
             // for list of cities in lazy row
             val citiesFrom = currentPage * pageSize
