@@ -26,3 +26,10 @@ The Companion Travel Application is an Android application designed to simplify 
 
 ## Preview Screenshots
 ![Phone_1](https://github.com/IvanMijic0/companion-App/blob/master/app/src/main/java/com/example/companion/GH/Phone_1.jpg)
+![Phone_2](https://github.com/IvanMijic0/companion-App/blob/master/app/src/main/java/com/example/companion/GH/Phone_2.jpg)
+![Phone_3](https://github.com/IvanMijic0/companion-App/blob/master/app/src/main/java/com/example/companion/GH/Phone_3.jpg)
+![Phone_4](https://github.com/IvanMijic0/companion-App/blob/master/app/src/main/java/com/example/companion/GH/Phone_4.jpg)
+![Phone_5](https://github.com/IvanMijic0/companion-App/blob/master/app/src/main/java/com/example/companion/GH/Phone_5.jpg)
+![Phone_6](https://github.com/IvanMijic0/companion-App/blob/master/app/src/main/java/com/example/companion/GH/Phone_6.jpg)
+![Phone_7](https://github.com/IvanMijic0/companion-App/blob/master/app/src/main/java/com/example/companion/GH/Phone_7.jpg)
+![Phone_8](https://github.com/IvanMijic0/companion-App/blob/master/app/src/main/java/com/example/companion/GH/Phone_8.jpg)
