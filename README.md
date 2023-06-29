@@ -25,3 +25,4 @@ The Companion Travel Application is an Android application designed to simplify 
  - "AndroidManifest.xml": Contains configuration settings related to permissions, activities, and services used by the application.
 
 ## Preview Screenshots
+![Phone_1](https://github.com/IvanMijic0/companion-App/blob/master/java/com/example/companion/GH/Phone_1.jpg)
